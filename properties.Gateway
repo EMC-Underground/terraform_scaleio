@@ -1,0 +1,154 @@
+properties.Gateway
+#
+# Copyright (c) 2017 Dell Inc. or its subsidiaries.  All Rights Reserved
+#
+
+###############################################################################
+# If you make changes in this configuration file, you must restart            #
+# the VxFlex OS Gateway service.                                               #
+###############################################################################
+
+####  mdm.ip.addresses   #####
+# Use a comma (,) or a semicolon (;) as a separator between the MDM IP addresses.
+# Empty space between addresses is not allowed.
+# For example: 10.76.60.50;10.76.40.11;10.76.80.55 or 10.76.60.50,10.76.40.11,10.76.80.55
+#
+# To improve the performance of the MDM lookup, place the primary MDM IP
+# addresses before the secondary MDM IP addresses.
+mdm.ip.addresses=10.237.198.170
+
+# System ID. If the field is left empty, the ID will be created automatically on first login (/api/login).
+# The system ID must be identical to the system ID of the system specified in mdm.ip.addresses
+system.id=
+
+mdm.port=6611
+
+gateway-admin.password=1000:3b256dfa51ee9f637fdf036a0ff9b781ca9b6ab6ada324246c466bbf9e0e2378:64bfbbce75c5f7bbc463b00967781722a2e7a484c810f9d1ae87f162f7e40bc8
+
+# For disabling local login and enabling only login by using ldap settings, set this parameter to true.
+# Otherwise login will be done locally or by using the ldap settings (depends on the user format given during the login)
+gateway-admin.disable.local.login=false
+
+vmware-mode=false
+
+# When installing SDSs or SDCs on RHEL5 systems, change this value to 20.
+im.parallelism=50
+
+# Allow access for change operations to this/these IP address(es)
+#remote.read.only.limit_IPS=
+
+###################################
+# IF YOU MANUALLY CHANGE THIS FILE - CHANGE do.not.update.user.properties.with.values.before.upgrade TO =true
+# THIS WILL PREVENT THE FILE FROM BEING OVERWRITTEN with the original values before the upgrade.
+###################################
+do.not.update.user.properties.with.values.before.upgrade=false
+
+#######Features Enabler#######
+features.enable_gateway=true
+features.enable_IM=true
+features.enable_snmp=false
+features.enable_ams=false
+features.enable_discovery_server=false
+features.enable_esrs=false
+features.enable_auto_collect_logs=false
+
+#######SNMP Service and ESRS properties#######
+# MDM credentials are only required for SNMP trap support and ESRS
+# Deprecated.
+# To enter MDM credentials, please use FOSGWTool.
+
+# sampling frequency for SNMP traps, in seconds
+snmp.sampling_frequency=30
+# resend frequency of SNMP traps, in minutes. 0 will send all traps every sampling
+snmp.resend_frequency=0
+#Supports two ips for two traps receivers. Use a comma (,) or a semicolon (;) as a separator between the two receivers IP addresses.
+snmp.traps_receiver_ip=
+snmp.port=162
+
+# The Installation Manager will ignore modifications made to these nodes (list of IP addresses):
+im.ip.ignore.list=
+
+#######JIT properties#######
+auto.collect.logs.cool.time.period.in.minutes=10
+auto.collect.logs.max.log.capacity.in.mb=1024
+
+#######Secure connection with MDM properties#######
+# Allow a non-secured REST connection to the MDM if a secured connection can't be established
+gateway-security.allow_non_secure_communication=false
+# Use a comma (,) as a separator between the cipher suites
+security.cipher_suites=
+# The gateway will trust automatically MDM certificates
+security.bypass_certificate_check=false
+
+### Set this parameter to limit the number of sdses that will be upgraded in simultaneously
+
+
+### Set these parameters with the values for the SDC special OS (Ubuntu , CoreOS , OEL) package
+# The value of this variable is encoded as <protocol>://[<address>]/<path> Where <protocol> := "ftp" | "sftp" | "file"
+# Example:
+#sdc.kernel.repo.SCINI_REPO_ADDRESS=ftp://ftp.emc.com/scini_repo
+
+# Contains the username that is used as login name. Needed when the protocol is ftp or sftp.
+# Example:
+# sdc.kernel.repo.SCINI_REPO_USER=admin
+
+# Represents the password. Needed only for ftp protocol.
+# Example:
+# sdc.kernel.repo.SCINI_REPO_PASSWORD=password
+
+# Contains a path to the private rsa key used for ssh connection (user identity file). Needed only for sftp.
+# Example:
+# sdc.kernel.repo.SCINI_REPO_USER_KEY=/path/to/user/key
+
+# Contains a path to the repository server's public host key, used for ssh connection. Needed only for sftp.
+# Example:
+# sdc.kernel.repo.SCINI_REPO_HOST_KEY=/path/to/server/repo
+
+# Set to 0 or 1, it tells us whether the fetched kernel modules must be verified.
+# Example:
+# sdc.kernel.repo.SCINI_REPO_MODULE_SIGCHECK=1
+
+# Contains a path to the EMS's GPG public key file that is needed for signature verification.
+# It is the same file that is used by LIA to verify RPMs. Needs to be set only if SCINI_REPO_MODULE_SIGCHECK was set to 1.
+# Example:
+# sdc.kernel.repo.SCINI_REPO_EMC_KEY=/opt/emc/scaleio/lia/cfg/GPG/RPM-GPG-KEY-ScaleIO
+
+# force add SDS devices - this property is being reset to false after a single use
+add.sds.with.force.on.next.run=false
+
+# The SSH key will be stored and used through this path
+# SSH.Key.Path=C:\\Program Files\\EMC\\ScaleIO\\Gateway\\webapps\\ROOT\\WEB-INF\\classes\\id_rsa
+
+# The default IP addresses the LIAs will receive as trusted when extending
+# Use a comma (,) between the IP addresses.
+# Empty space between addresses is not allowed.
+# trusted.LIA.IPs=1.2.3.4,2.3.4.5
+
+ams.extend_process_automation.max_devices_per_sp=220
+
+# This property is used for the AMS and specify the time period we should use when calculating an alert for certificate about to expire.
+ams.certificateAboutToExpireAlertTimeInDays = 30
+upgrade.mdm.actor.port =
+upgrade.mdm.version.orig =
+upgrade.mdm.role =
+upgrade.mdm.data.ips =
+upgrade.sds.mm_list =
+upgrade.mdm.status =
+upgrade.mdm.version.target =
+upgrade.mdm.mgmt.ips =
+
+#secondes
+#ams.upgrade.esx_enter_maintenance_timeout = 1800
+
+#path for lockbox
+lockbox.persistent.path=
+
+#ips that each new deployment will be set to LIA and that will configure LIA to answer only those ip addresses
+trusted.LIA.IPs=
+
+#path for ssh key file
+SSH.Key.Path=
+
+
+# This property is used for the AMS and specify the SDS role for the 3rd and 4th data IPs (if used). Values can be: SDS_COMMUNICATION_ONLY, SDC_COMMUNICATION_ONLY, SDS_AND_SDC_COMMUNICATION
+ams.extraDataIpsSdsRole = SDS_COMMUNICATION_ONLY
