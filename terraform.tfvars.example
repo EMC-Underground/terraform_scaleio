@@ -1,0 +1,4 @@
+root_password="RootPassword"
+vsphere_password="vSpherePassword"
+vsphere_user="vSphereUserName"
+vsphere_server="vSphereipAddress"
