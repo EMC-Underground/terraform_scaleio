@@ -1,16 +1,16 @@
-variable "servers"{}
-variable "datastore"{}
+variable "servers" {}
+variable "datastore" {}
 variable "ipv4_344" {}
-variable "ipv4_siopg1"{}
-variable "ipv4_siopg2"{}
-variable "root_password"{}
+variable "ipv4_siopg1" {}
+variable "ipv4_siopg2" {}
+variable "root_password" {}
 
 data "vsphere_datacenter" "dc" {
   name = "PacLabs"
 }
 
 data "vsphere_datastore" "datastore" {
-  name = "${var.datastore}"
+  name          = "${var.datastore}"
   datacenter_id = "${data.vsphere_datacenter.dc.id}"
 }
 
@@ -45,14 +45,14 @@ data "vsphere_virtual_machine" "template" {
 }
 
 resource "vsphere_virtual_machine" "GATEWAYvm" {
-  count = "${var.servers}"
+  count            = "${var.servers}"
   name             = "terraform-SIOGW"
   resource_pool_id = "${data.vsphere_compute_cluster.cluster.resource_pool_id}"
   datastore_id     = "${data.vsphere_datastore.datastore.id}"
-  num_cpus = 2
-  memory   = 3072
-  guest_id = "${data.vsphere_virtual_machine.template.guest_id}"
-  scsi_type = "${data.vsphere_virtual_machine.template.scsi_type}"
+  num_cpus         = 2
+  memory           = 3072
+  guest_id         = "${data.vsphere_virtual_machine.template.guest_id}"
+  scsi_type        = "${data.vsphere_virtual_machine.template.scsi_type}"
 
   network_interface {
     network_id   = "${data.vsphere_network.vlan344.id}"
@@ -85,34 +85,34 @@ resource "vsphere_virtual_machine" "GATEWAYvm" {
         domain    = "pac.lab"
       }
 
-     network_interface {
+      network_interface {
         ipv4_address = "${var.ipv4_344}"
         ipv4_netmask = 24
       }
 
       network_interface {
-         ipv4_address = "${var.ipv4_siopg1}"
-         ipv4_netmask = 24
+        ipv4_address = "${var.ipv4_siopg1}"
+        ipv4_netmask = 24
       }
 
       network_interface {
-         ipv4_address = "${var.ipv4_siopg2}"
-         ipv4_netmask = 24
-      }
-      ipv4_gateway = "10.237.198.1"
-      dns_server_list = ["10.237.198.254", "10.201.16.29"]
+        ipv4_address = "${var.ipv4_siopg2}"
+        ipv4_netmask = 24
       }
 
-}
+      ipv4_gateway    = "10.237.198.1"
+      dns_server_list = ["10.237.198.254", "10.201.16.29"]
+    }
+  }
 
   provisioner "file" {
-    source      = "C:/Users/soperb/Documents/Lab/PacLabs/SSH_Keys/authorized_keys"
+    source      = "./authorized_keys"
     destination = "/root/.ssh/authorized_keys"
 
-  connection {
-    type     = "ssh"
-    user     = "root"
-    password = "${var.root_password}"
-}
-}
+    connection {
+      type     = "ssh"
+      user     = "root"
+      password = "${var.root_password}"
+    }
+  }
 }
